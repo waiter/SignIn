@@ -1,0 +1,5 @@
+rootProject.name = 'SignIn'
+
+include ':app'
+include ':rn-device-activity'
+project(':rn-device-activity').projectDir = new File(rootProject.projectDir, '../node_modules/rn-device-activity/android')
