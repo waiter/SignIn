@@ -21,6 +21,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		A359CF201DAA80D900166BA1 /* 迷你简丫丫.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A359CF1F1DAA80D900166BA1 /* 迷你简丫丫.ttf */; };
 		A38502E41DA91F740063D596 /* libRNDeviceActivity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A38502CD1DA7F9640063D596 /* libRNDeviceActivity.a */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +126,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A359CF1F1DAA80D900166BA1 /* 迷你简丫丫.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "迷你简丫丫.ttf"; path = "../src/font/迷你简丫丫.ttf"; sourceTree = "<group>"; };
 		C0356788B29E4CC1A2B4C347 /* RNDeviceActivity.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceActivity.xcodeproj; path = "../node_modules/rn-device-activity/ios/RNDeviceActivity.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -282,6 +284,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A359CF031DAA792700166BA1 /* Resources */,
 				13B07FAE1A68108700A75B9A /* SignIn */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* SignInTests */,
@@ -297,6 +300,14 @@
 				13B07F961A680F5B00A75B9A /* SignIn.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A359CF031DAA792700166BA1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A359CF1F1DAA80D900166BA1 /* 迷你简丫丫.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		A38502BF1DA7F9640063D596 /* Products */ = {
@@ -493,6 +504,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				A359CF201DAA80D900166BA1 /* 迷你简丫丫.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

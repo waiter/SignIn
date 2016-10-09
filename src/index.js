@@ -94,7 +94,7 @@ class SignIn extends BindComponent {
       } else {
         Alert.alert('你确定吗？', '要打卡了？？', [{text: '不打'},
         {text: '确定！', onPress: () => {
-          Alert.alert('真得确定吗？', '真得看足半个小时的Python了吗？', [{text: '哦！'},
+          Alert.alert('真得确定吗？', '真的看足半个小时的Python了吗？', [{text: '哦！'},
           {text: '我看了！真的看了！你不相信我！我不理你了！', onPress: () => {
             const newO = Object.assign([], this.state.datas);
             newO.push(today);
@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
   clickWord: {
     fontSize: 30,
     fontWeight: 'bold',
+    fontFamily: '迷你简丫丫',
   },
   pp: {
     height: 64,
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
   },
   ppWord: {
     fontSize: 28,
-
+    fontFamily: '迷你简丫丫',
   }
 });
 
