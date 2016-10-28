@@ -11,18 +11,25 @@ import Calendar from './components/Calendar';
 import BindComponent from './components/BindComponent';
 import DataHelper from './data/helper';
 import moment from 'moment';
+import DatePicker from 'rmc-date-picker';
+import Popup from 'rmc-date-picker/lib/Popup';
+import PopupStyles from 'rmc-date-picker/lib/PopupStyles';
 
 
 const signKey = 'signDatas';
 
 class SignIn extends BindComponent {
   constructor(props) {
-    super(props, ['initData', 'saveData', 'makeNoteAndAction', 'addTimer', 'resumeCheck', 'isTodayIn', 'reRender', 'saveNewData']);
+    super(props, ['initData', 'saveData', 'makeNoteAndAction',
+    'addTimer', 'resumeCheck', 'isTodayIn', 'reRender',
+    'saveNewData', 'showDatePicker', 'dismissDatePicker',
+    'changeDate', 'doConfirm']);
     this.state = {
       datas: [],
       isInit: false,
       isSaving: false,
       resume: 1,
+      visible: false,
     };
     this.initData();
   }
@@ -83,25 +90,33 @@ class SignIn extends BindComponent {
       alert('保存中...');
     } else {
       const today = moment().format('YYYY-MM-DD');
-      if (this.isTodayIn()) {
-        Alert.alert('你确定吗？', '要取消打卡吗？',
-        [{text: '不取消'},
-        {text: '确定！', onPress: () => {
+      this.doConfirm(this.isTodayIn(), today, false);
+    }
+  }
+
+  doConfirm(isDone, day, isBefore) {
+    if (isDone) {
+      Alert.alert('你确定吗？', isBefore ? `要退掉${day}的签？`: `要取消打卡吗？`,
+      [{text: isBefore ? '不退不退' : '不取消'},
+      {text: '确定！', onPress: () => {
+        const newO = Object.assign([], this.state.datas);
+        newO.splice(newO.indexOf(day), 1);
+        this.saveNewData(newO);
+        this.dismissDatePicker();
+      }}]);
+    } else {
+      Alert.alert('你确定吗？', isBefore ? `要补${day}的签？` : `要打卡了？？`, [
+        {text: isBefore ? `不补` : '不打'},
+      {text: '确定！', onPress: () => {
+        Alert.alert('真得确定吗？', '真的看足半个小时的Python了吗？', [{text: '你妹！'},
+        {text: '我看了！真的看了！你不相信我！我不理你了！', onPress: () => {
           const newO = Object.assign([], this.state.datas);
-          newO.splice(newO.indexOf(today), 1);
+          newO.push(day);
+          newO.sort();
           this.saveNewData(newO);
+          this.dismissDatePicker();
         }}]);
-      } else {
-        Alert.alert('你确定吗？', '要打卡了？？', [{text: '不打'},
-        {text: '确定！', onPress: () => {
-          Alert.alert('真得确定吗？', '真的看足半个小时的Python了吗？', [{text: '哦！'},
-          {text: '我看了！真的看了！你不相信我！我不理你了！', onPress: () => {
-            const newO = Object.assign([], this.state.datas);
-            newO.push(today);
-            this.saveNewData(newO);
-          }}]);
-        }}]);
-      }
+      }}]);
     }
   }
 
@@ -130,14 +145,41 @@ class SignIn extends BindComponent {
     return [note, active, datas.length]
   }
 
+  showDatePicker() {
+    this.setState({
+      visible: true
+    });
+  }
+
+  dismissDatePicker() {
+    this.setState({
+      visible: false,
+    });
+  }
+
+  changeDate(mom) {
+    if (!this.state.isInit) {
+      alert('正在初始化...');
+    } else if (this.state.isSaving) {
+      alert('保存中...');
+    } else {
+      const day = mom.format('YYYY-MM-DD');
+      const isDone = this.state.datas.indexOf(day) > -1;
+      this.doConfirm(isDone, day, true);
+    }
+  }
+
   render() {
-    const {isInit, datas, isSaving} = this.state;
+    const {isInit, datas, isSaving, visible} = this.state;
     const [note, active, len] = this.makeNoteAndAction(datas);
     let word = '打卡';
+    let tword = '退/补签';
     if (!isInit) {
       word = '读取数据中...';
+      tword = word;
     } else if (isSaving) {
       word = '保存中...';
+      tword = word;
     } else{
       if (this.isTodayIn()) {
         word = '已打卡';
@@ -157,6 +199,7 @@ class SignIn extends BindComponent {
         endTime={moment().add(1, 'month')}
       />
     );
+    const yestoday = moment().subtract(1, 'days');
 
     return (
       <View style={styles.container}>
@@ -169,6 +212,26 @@ class SignIn extends BindComponent {
             <Text style={styles.clickWord}>{word}</Text>
           </View>
         </TouchableOpacity>
+        <Popup
+          datePicker={<DatePicker
+            defaultDate={yestoday}
+            maxDate={yestoday}
+            />}
+          visible={visible}
+          styles={PopupStyles}
+          dismissText="取消"
+          okText="确定"
+          title="选择退/补签日期"
+          date={yestoday}
+          onDismiss={this.dismissDatePicker}
+          onChange={this.changeDate}
+        >
+        <TouchableOpacity style={styles.addtion} onPress={this.showDatePicker}>
+          <View>
+            <Text style={styles.clickWord}>{tword}</Text>
+          </View>
+        </TouchableOpacity>
+        </Popup>
       </View>
     );
   }
@@ -203,7 +266,15 @@ const styles = StyleSheet.create({
   ppWord: {
     fontSize: 28,
     fontFamily: '迷你简丫丫',
-  }
+  },
+  addtion: {
+    height: 50,
+    backgroundColor: '#f9dbe7',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#000',
+  },
 });
 
 export default SignIn;
